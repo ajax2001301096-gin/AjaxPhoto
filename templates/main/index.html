@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+  </head>
+  <body>
+    <!--ヘッダー-->
+    <header>
+      <div>Ajax Portal</div>
+      <nav>
+        <ul>
+          <li>写真</li>
+          <li>写真ブログ</li>
+          <li>ITブログ</li>
+          <li>自己紹介</li>
+        </ul>
+      </nav>
+    </header>
+    <!--ボディ-->
+    <body>
+      <div class="background_img">
+        <img src="" alt="" />
+      </div>
+      <section class="gallery" id="gallery">
+       {% for group in location_groups %}
+          {% if group.count > 1 %}
+          <!-- 複数写真の場合 -->
+          <div class="photo-item stacked" data-location="{{ group.location.location_name }}" ></div>
+            <div class="stack-indicator">📍 {{ group.count }} photos</div>
+            <div class="photo-stack">
+            {% for photo in group.photos %}
+              <div class="photo-card" {% if forloop.first %}onclick="openModal({{ photo.photo_id }})"{% endif %}>
+                  <img src="{{ photo.picture }}" alt="{{ photo.title }}">
+                  {% if forloop.first %}
+                      <div class="photo-info">
+                          <h3>{{ photo.title }}</h3>
+                          <div class="photo-location">📍 {{ group.location.location_name }}</div>
+                      </div>
+                  {% endif %}
+              </div>
+            {% endfor %}
+            </div>
+          </div>
+          {% else %}
+            <!-- 写真一つの場合 -->
+            <div class="photo-item" onclick="openModal({{ group.photos.0.photo_id }})">
+                <div class="photo-stack">
+                    <div class="photo-card">
+                        <img src="{{ group.photos.0.picture.url }}" alt="{{ group.photos.0.title }}">
+                        <div class="photo-info">
+                            <h3>{{ group.photos.0.title }}</h3>
+                            <div class="photo-location">📍 {{ group.location.location_name }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+      {% endfor %}
+      </section>
+    </body>
+  </body>
+</html>
