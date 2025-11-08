@@ -9,32 +9,72 @@
   </head>
   <body>
     <!--ヘッダー-->
-    <header>
-      <div>Ajax Portal</div>
-      <nav>
-        <ul>
-          <li>写真</li>
-          <li>写真ブログ</li>
-          <li>ITブログ</li>
-          <li>自己紹介</li>
-        </ul>
-      </nav>
+    <header id="header">
+        <div class="header-container">
+            <!-- Logo -->
+            <div class="logo">
+                <div class="logo-icon">
+                    <!-- Camera Icon -->
+                    <svg class="camera-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="7" width="18" height="13" rx="2" stroke="#3D3935" stroke-width="2"/>
+                        <path d="M8 7L9.5 4H14.5L16 7" stroke="#3D3935" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="12" cy="13.5" r="3" stroke="#3D3935" stroke-width="2"/>
+                        <circle cx="17.5" cy="9.5" r="0.5" fill="#3D3935"/>
+                    </svg>
+                    <!-- Laptop Icon -->
+                    <svg class="laptop-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="5" width="18" height="12" rx="1.5" stroke="#3D3935" stroke-width="2"/>
+                        <path d="M1 17H23V19C23 19.5523 22.5523 20 22 20H2C1.44772 20 1 19.5523 1 19V17Z" stroke="#3D3935" stroke-width="2"/>
+                        <line x1="8" y1="9" x2="16" y2="9" stroke="#3D3935" stroke-width="1.5" stroke-linecap="round"/>
+                        <line x1="8" y1="12" x2="14" y2="12" stroke="#3D3935" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <span class="logo-text">Ajax Portal</span>
+            </div>
+
+            <!-- Navigation -->
+            <nav id="nav">
+                <ul>
+                    <li><a href="#" class="active">写真</a></li>
+                    <li><a href="#">写真ブログ</a></li>
+                    <li class="has-dropdown">
+                        <a href="#">ITブログ</a>
+                        <!-- Dropdown (optional) -->
+                        <div class="dropdown-menu">
+                            <a href="#">Django</a>
+                            <a href="#">JavaScript</a>
+                            <a href="#">CSS</a>
+                        </div>
+                    </li>
+                    <li><a href="#">自己紹介</a></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </header>
     <!--ボディ-->
     <body>
-      <div class="background_img">
-        <img src="" alt="" />
+      <div class="avatar_main">
+        <img src="media\Avatar\avatar.png" alt="" />
+        <h1>あらゆる瞬間、あらゆる美しさ</h1>
+        <p>Khám phá những khoảnh khắc qua ống kính của tôi</p>
       </div>
       <section class="gallery" id="gallery">
        {% for group in location_groups %}
           {% if group.count > 1 %}
           <!-- 複数写真の場合 -->
-          <div class="photo-item stacked" data-location="{{ group.location.location_name }}" ></div>
+          <div class="photo-item stacked" data-location="{{ group.location.location_name }}" >
             <div class="stack-indicator">📍 {{ group.count }} photos</div>
             <div class="photo-stack">
             {% for photo in group.photos %}
               <div class="photo-card" {% if forloop.first %}onclick="openModal({{ photo.photo_id }})"{% endif %}>
-                  <img src="{{ photo.picture }}" alt="{{ photo.title }}">
+                  <img src="{{ photo.picture.url }}" alt="{{ photo.title }}">
                   {% if forloop.first %}
                       <div class="photo-info">
                           <h3>{{ photo.title }}</h3>
