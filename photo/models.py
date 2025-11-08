@@ -5,7 +5,7 @@ from location.models import Location
 
 #写真テーブル
 class Photo(models.Model):
-  photo_id = models.IntegerField(primary_key=True,editable=True,verbose_name="写真ID")
+  photo_id = models.AutoField(primary_key=True,editable=True,verbose_name="写真ID")
   blog_content = models.TextField(verbose_name="ブログコンテンツ")
   title = models.CharField(max_length=50,verbose_name="タイトル")
   picture = models.ImageField(upload_to="photo/picture",blank=True,null=False,verbose_name="写真")

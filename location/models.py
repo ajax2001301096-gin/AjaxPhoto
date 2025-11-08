@@ -3,7 +3,7 @@ from pathlib import Path
 
 #アドレステーブル
 class Location(models.Model):
-  location_id = models.IntegerField(primary_key=True,editable=True,blank=True,verbose_name="場所ID")
+  location_id = models.AutoField(primary_key=True,editable=True,blank=True,verbose_name="場所ID")
   location_name = models.TextField(verbose_name="場所名")
   maps_url = models.TextField(null=False,verbose_name="マップリンク")
 
