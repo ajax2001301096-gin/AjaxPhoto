@@ -4,102 +4,201 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2" />
     <title>Document</title>
   </head>
   <body>
     <!--ヘッダー-->
     <header id="header">
-        <div class="header-container">
-            <!-- Logo -->
-            <div class="logo">
-                <div class="logo-icon">
-                    <!-- Camera Icon -->
-                    <svg class="camera-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="3" y="7" width="18" height="13" rx="2" stroke="#3D3935" stroke-width="2"/>
-                        <path d="M8 7L9.5 4H14.5L16 7" stroke="#3D3935" stroke-width="2" stroke-linecap="round"/>
-                        <circle cx="12" cy="13.5" r="3" stroke="#3D3935" stroke-width="2"/>
-                        <circle cx="17.5" cy="9.5" r="0.5" fill="#3D3935"/>
-                    </svg>
-                    <!-- Laptop Icon -->
-                    <svg class="laptop-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="3" y="5" width="18" height="12" rx="1.5" stroke="#3D3935" stroke-width="2"/>
-                        <path d="M1 17H23V19C23 19.5523 22.5523 20 22 20H2C1.44772 20 1 19.5523 1 19V17Z" stroke="#3D3935" stroke-width="2"/>
-                        <line x1="8" y1="9" x2="16" y2="9" stroke="#3D3935" stroke-width="1.5" stroke-linecap="round"/>
-                        <line x1="8" y1="12" x2="14" y2="12" stroke="#3D3935" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                </div>
-                <span class="logo-text">Ajax Portal</span>
-            </div>
-
-            <!-- Navigation -->
-            <nav id="nav">
-                <ul>
-                    <li><a href="#" class="active">写真</a></li>
-                    <li><a href="#">写真ブログ</a></li>
-                    <li class="has-dropdown">
-                        <a href="#">ITブログ</a>
-                        <!-- Dropdown (optional) -->
-                        <div class="dropdown-menu">
-                            <a href="#">Django</a>
-                            <a href="#">JavaScript</a>
-                            <a href="#">CSS</a>
-                        </div>
-                    </li>
-                    <li><a href="#">自己紹介</a></li>
-                </ul>
-            </nav>
-
-            <!-- Mobile Menu Button -->
-            <button class="mobile-menu-btn" id="mobile-menu-btn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+      <div class="header-container">
+        <!-- Logo -->
+        <div class="logo">
+          <div class="logo-icon">
+            <!-- Camera Icon -->
+            <svg
+              class="camera-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="3"
+                y="7"
+                width="18"
+                height="13"
+                rx="2"
+                stroke="#3D3935"
+                stroke-width="2"
+              />
+              <path
+                d="M8 7L9.5 4H14.5L16 7"
+                stroke="#3D3935"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <circle
+                cx="12"
+                cy="13.5"
+                r="3"
+                stroke="#3D3935"
+                stroke-width="2"
+              />
+              <circle cx="17.5" cy="9.5" r="0.5" fill="#3D3935" />
+            </svg>
+            <!-- Laptop Icon -->
+            <svg
+              class="laptop-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="3"
+                y="5"
+                width="18"
+                height="12"
+                rx="1.5"
+                stroke="#3D3935"
+                stroke-width="2"
+              />
+              <path
+                d="M1 17H23V19C23 19.5523 22.5523 20 22 20H2C1.44772 20 1 19.5523 1 19V17Z"
+                stroke="#3D3935"
+                stroke-width="2"
+              />
+              <line
+                x1="8"
+                y1="9"
+                x2="16"
+                y2="9"
+                stroke="#3D3935"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+              <line
+                x1="8"
+                y1="12"
+                x2="14"
+                y2="12"
+                stroke="#3D3935"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+          <span class="logo-text">Ajax Portal</span>
         </div>
+
+        <!-- Navigation -->
+        <nav id="nav">
+          <ul>
+            <li><a href="#" class="active">写真</a></li>
+            <li><a href="#">写真ブログ</a></li>
+            <li class="has-dropdown">
+              <a href="#">ITブログ</a>
+              <!-- Dropdown (optional) -->
+              <div class="dropdown-menu">
+                <a href="#">Django</a>
+                <a href="#">JavaScript</a>
+                <a href="#">CSS</a>
+              </div>
+            </li>
+            <li><a href="#">自己紹介</a></li>
+          </ul>
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </header>
     <!--ボディ-->
     <body>
       <div class="avatar_main">
-        <img src="media\Avatar\avatar.png" alt="" />
-        <h1>あらゆる瞬間、あらゆる美しさ</h1>
-        <p>Khám phá những khoảnh khắc qua ống kính của tôi</p>
+        <!-- Chữ bên trái -->
+        <div class="vertical-text left-text">
+          <span style="--i: 0">写</span>
+          <span style="--i: 1">真</span>
+          <span style="--i: 2">の</span>
+          <span style="--i: 3">世</span>
+          <span style="--i: 4">界</span>
+        </div>
+        <div class="banner-container">
+          <!-- Ảnh chính -->
+          <img src="media/Avatar/avatar2.jpg" alt="Banner" />
+          <!-- Slogan ở dưới -->
+          <div class="banner-overlay">
+            <h1>あらゆる瞬間、あらゆる美しさ</h1>
+            <p>Khám phá những khoảnh khắc qua ống kính của tôi</p>
+          </div>
+        </div>
+        <!-- Chữ bên phải -->
+        <div class="vertical-text right-text">
+          <span style="--i: 0">美</span>
+          <span style="--i: 1">し</span>
+          <span style="--i: 2">い</span>
+          <span style="--i: 3">瞬</span>
+          <span style="--i: 4">間</span>
+        </div>
       </div>
       <section class="gallery" id="gallery">
-       {% for group in location_groups %}
-          {% if group.count > 1 %}
-          <!-- 複数写真の場合 -->
-          <div class="photo-item stacked" data-location="{{ group.location.location_name }}" >
-            <div class="stack-indicator">📍 {{ group.count }} photos</div>
-            <div class="photo-stack">
+        {% for group in location_groups %} {% if group.count > 1 %}
+        <!-- 複数写真の場合 -->
+        <div
+          class="photo-item stacked"
+          data-location="{{ group.location.location_name }}"
+        >
+          <div class="stack-indicator">📍 {{ group.count }} photos</div>
+          <div class="photo-stack">
             {% for photo in group.photos %}
-              <div class="photo-card" {% if forloop.first %}onclick="openModal({{ photo.photo_id }})"{% endif %}>
-                  <img src="{{ photo.picture.url }}" alt="{{ photo.title }}">
-                  {% if forloop.first %}
-                      <div class="photo-info">
-                          <h3>{{ photo.title }}</h3>
-                          <div class="photo-location">📍 {{ group.location.location_name }}</div>
-                      </div>
-                  {% endif %}
+            <div
+              class="photo-card"
+              {%
+              if
+              forloop.first
+              %}onclick="openModal({{ photo.photo_id }})"
+              {%
+              endif
+              %}
+            >
+              <img src="{{ photo.picture.url }}" alt="{{ photo.title }}" />
+              {% if forloop.first %}
+              <div class="photo-info">
+                <h3>{{ photo.title }}</h3>
+                <div class="photo-location">
+                  📍 {{ group.location.location_name }}
+                </div>
               </div>
+              {% endif %}
+            </div>
             {% endfor %}
+          </div>
+        </div>
+        {% else %}
+        <!-- 写真一つの場合 -->
+        <div
+          class="photo-item"
+          onclick="openModal({{ group.photos.0.photo_id }})"
+        >
+          <div class="photo-stack">
+            <div class="photo-card">
+              <img
+                src="{{ group.photos.0.picture.url }}"
+                alt="{{ group.photos.0.title }}"
+              />
+              <div class="photo-info">
+                <h3>{{ group.photos.0.title }}</h3>
+                <div class="photo-location">
+                  📍 {{ group.location.location_name }}
+                </div>
+              </div>
             </div>
           </div>
-          {% else %}
-            <!-- 写真一つの場合 -->
-            <div class="photo-item" onclick="openModal({{ group.photos.0.photo_id }})">
-                <div class="photo-stack">
-                    <div class="photo-card">
-                        <img src="{{ group.photos.0.picture.url }}" alt="{{ group.photos.0.title }}">
-                        <div class="photo-info">
-                            <h3>{{ group.photos.0.title }}</h3>
-                            <div class="photo-location">📍 {{ group.location.location_name }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-      {% endfor %}
+        </div>
+        {% endif %} {% endfor %}
       </section>
     </body>
   </body>

@@ -308,44 +308,109 @@ nav ul li a.active::after {
 }
 
 /* ==================== END HEADER/NAVIGATION ==================== */
-/* Avatar-slogan */
+/* Avatar-slogan - Illustration Style with Vertical Text Animation */
 .avatar_main {
-    padding: 6rem 2rem 4rem;
+    /* padding: 4rem 2rem 3rem; */
     text-align: center;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
-.avatar_main img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #E8E3DB;
-    box-shadow: 0 8px 24px rgba(61, 57, 53, 0.12);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.banner-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
 }
 
-.avatar_main img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 32px rgba(61, 57, 53, 0.18);
+.banner-container img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    display: block;
+    border-radius: 16px;
+    mix-blend-mode: multiply;
+    position: relative;
+    z-index: 1;
 }
 
-.avatar_main h1 {
+/* Vertical Text Animation */
+.vertical-text {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    /* font-size: 2.5rem;
+    font-weight: 600; */
+    color: #3D3935;
+    z-index: 2;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.left-text {
+    left: 2%;
+}
+
+.right-text {
+    right: 2%;
+}
+
+.vertical-text span {
+    display: block;
+    opacity: 0;
+    animation: fadeInOut 8s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.4s);
+}
+
+/* Animation: Xuất hiện từng chữ, rồi biến mất */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    12.5% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    62.5% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+.banner-overlay {
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+.banner-overlay h1 {
     font-size: 2.5rem;
     font-weight: 400;
     color: #3D3935;
-    margin: 0;
+    margin: 0 0 0.8rem 0;
     line-height: 1.3;
     letter-spacing: 0.5px;
 }
 
-.avatar_main p {
-    font-size: 1.1rem;
+.banner-overlay p {
+    font-size: 1.2rem;
     color: #7A7571;
     margin: 0;
     font-weight: 400;
@@ -354,41 +419,157 @@ nav ul li a.active::after {
 /* Responsive */
 @media (max-width: 768px) {
     .avatar_main {
-        padding: 4rem 1.5rem 3rem;
-        gap: 1rem;
+        padding: 3rem 1.5rem 2rem;
+        gap: 1.5rem;
     }
 
-    .avatar_main img {
-        width: 120px;
-        height: 120px;
+    .banner-container {
+        max-width: 600px;
+        min-height: 400px;
     }
 
-    .avatar_main h1 {
-        font-size: 1.8rem;
+    .banner-container img {
+        max-width: 300px;
     }
 
-    .avatar_main p {
-        font-size: 1rem;
+    .vertical-text {
+        font-size: 2rem;
+    }
+
+    .banner-overlay h1 {
+        font-size: 2rem;
+    }
+
+    .banner-overlay p {
+        font-size: 1.1rem;
     }
 }
 
 @media (max-width: 480px) {
-    .avatar_main img {
-        width: 100px;
-        height: 100px;
+    .avatar_main {
+        padding: 2rem 1rem 1.5rem;
+        gap: 1rem;
     }
 
-    .avatar_main h1 {
+    .banner-container {
+        min-height: 300px;
+    }
+
+    .banner-container img {
+        max-width: 250px;
+    }
+
+    .vertical-text {
         font-size: 1.5rem;
     }
 
-    .avatar_main p {
-        font-size: 0.95rem;
+    .left-text {
+        left: 0;
+    }
+
+    .right-text {
+        right: 0;
+    }
+
+    .banner-overlay h1 {
+        font-size: 1.6rem;
+    }
+
+    .banner-overlay p {
+        font-size: 1rem;
     }
 }
 
-/* End Avatar-Slogan */
+.banner-overlay {
+    margin-top: 1.5rem;
+    width: 100%;
+}
 
+.banner-overlay h1 {
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #3D3935;
+    margin: 0 0 0.8rem 0;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+}
+
+.banner-overlay p {
+    font-size: 1.2rem;
+    color: #7A7571;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .avatar_main {
+        padding: 3rem 1.5rem 2rem;
+        gap: 1.5rem;
+    }
+
+    .banner-container {
+        max-width: 500px;
+        gap: 2rem;
+    }
+
+    .banner-container img {
+        max-width: 300px;
+    }
+
+    .vertical-text {
+        font-size: 2rem;
+        letter-spacing: 0.3rem;
+        min-height: 300px;
+    }
+
+    .banner-overlay h1 {
+        font-size: 2rem;
+    }
+
+    .banner-overlay p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .avatar_main {
+        padding: 2rem 1rem 1.5rem;
+        gap: 1rem;
+    }
+
+    .banner-container {
+        gap: 1rem;
+    }
+
+    .banner-container img {
+        max-width: 250px;
+    }
+
+    .vertical-text {
+        font-size: 1.5rem;
+        letter-spacing: 0.2rem;
+        min-height: 250px;
+    }
+
+    .left-text {
+        left: -10px;
+    }
+
+    .right-text {
+        right: -10px;
+    }
+
+    .banner-overlay h1 {
+        font-size: 1.6rem;
+    }
+
+    .banner-overlay p {
+        font-size: 1rem;
+    }
+}
+
+/* End-Banner */
 /* Hero Section */
 .hero {
     padding: 4rem 2rem;
