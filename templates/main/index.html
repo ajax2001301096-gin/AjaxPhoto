@@ -148,7 +148,7 @@
         </div>
       </div>
       <section class="gallery" id="gallery">
-        {% for group in location_groups %} {% if group.count > 1 %}
+        {% for group in blog_groups %} {% if group.count > 1 %}
         <!-- 複数写真の場合 -->
         <div
           class="photo-item stacked"
@@ -167,7 +167,7 @@
               endif
               %}
             >
-              <img src="{{ photo.picture.url }}" alt="{{ photo.title }}" />
+              <img src="{{ photo.picture.url }}" alt="{{ photo.blogPhoto.blog_title }}" />
               {% if forloop.first %}
               <div class="photo-info">
                 <h3>{{ photo.title }}</h3>
@@ -190,7 +190,7 @@
             <div class="photo-card">
               <img
                 src="{{ group.photos.0.picture.url }}"
-                alt="{{ group.photos.0.title }}"
+                alt="{{ group.photos.0.blogPhoto.blog_title }}"
               />
               <div class="photo-info">
                 <h3>{{ group.photos.0.title }}</h3>
