@@ -37,11 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 各アプリケーションを設定
     'user.apps.UserConfig',
     'photo.apps.PhotoConfig',
     'location.apps.LocationConfig',
-    # 各アプリケーションを設定
     'main.apps.MainConfig',
+    'blogPhoto.apps.BlogphotoConfig'
 
 ]
 

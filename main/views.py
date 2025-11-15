@@ -5,25 +5,25 @@ from location.models import Location
 from collections import defaultdict
 class MainIndexView(View):
   def get(self,request):
-    #アドレスによって全部写真取得
-    photos = Photo.objects.select_related('location').all().order_by('uploaded_at')
+    #ブログによって全部写真取得
+    photos = Photo.objects.select_related('blogPhoto').all().order_by('uploaded_at')
 
-    #location_idによる写真グループ
-    photos_by_location = defaultdict(list)
+    #blog_idによる写真グループ
+    photos_by_blog = defaultdict(list)
     for photo in photos :
-      if photo.location:
-        photos_by_location[photo.location.location_id].append(photo)
+      if photo.blogPhoto:
+        photos_by_blog[photo.blogPhoto.blog_id].append(photo)
 
-    location_groups = []
-    for location_id, photo_list in photos_by_location.items():
-      location_groups.append({
-        'location':photo_list[0].location,
+    blog_groups = []
+    for location_id, photo_list in photos_by_blog.items():
+      blog_groups.append({
+        'location':photo_list[0].blogPhoto.location,
         'photos': photo_list,
         'count':len(photo_list)
       })
 
     context = {
-      'location_groups':location_groups
+      'blog_groups':blog_groups
     }
     return render(request,'main/index.html',context)
   
