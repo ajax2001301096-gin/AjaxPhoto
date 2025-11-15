@@ -1,0 +1,57 @@
+/* Container cho các cánh hoa */
+.petals-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 999;
+}
+/* Style cho mỗi cánh hoa */
+.petal {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(ellipse at center, #f0bda5 0%, #ebe8c5 100%);
+    border-radius: 75% 20% 75% 20%;
+    opacity: 0.8;
+    animation: fall linear infinite;
+    transform-origin: center;
+}
+/* Hiệu ứng xoay nhẹ khi rơi */
+@keyframes fall {
+    0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0.3;
+    }
+}
+/* Tạo các cánh hoa với kích thước và tốc độ khác nhau */
+.petal:nth-child(1) { left: 5%; animation-duration:  10s; animation-delay: 0s; }
+.petal:nth-child(2) { left: 15%; animation-duration: 12s; animation-delay: 1s; width: 12px; height: 12px; }
+.petal:nth-child(3) { left: 25%; animation-duration: 11s; animation-delay: 2s; }
+.petal:nth-child(4) { left: 35%; animation-duration: 13s; animation-delay: 0.5s; width: 18px; height: 18px; }
+.petal:nth-child(5) { left: 45%; animation-duration: 10.5s; animation-delay: 1.5s; }
+.petal:nth-child(6) { left: 55%; animation-duration: 12.5s; animation-delay: 2.5s; width: 14px; height: 14px; }
+.petal:nth-child(7) { left: 65%; animation-duration: 11.5s; animation-delay: 0.8s; }
+.petal:nth-child(8) { left: 75%; animation-duration: 13.5s; animation-delay: 1.8s; width: 16px; height: 16px; }
+.petal:nth-child(9) { left: 85%; animation-duration: 10.8s; animation-delay: 2.8s; }
+.petal:nth-child(10) { left: 95%; animation-duration: 12.2s; animation-delay: 0.3s; width: 13px; height: 13px; }
+.petal:nth-child(11) { left: 10%; animation-duration: 11.8s; animation-delay: 3s; }
+.petal:nth-child(12) { left: 20%; animation-duration: 13.2s; animation-delay: 1.2s; width: 17px; height: 17px; }
+.petal:nth-child(13) { left: 30%; animation-duration: 10.3s; animation-delay: 2.2s; }
+.petal:nth-child(14) { left: 40%; animation-duration: 12.8s; animation-delay: 0.7s; }
+.petal:nth-child(15) { left: 50%; animation-duration: 11.3s; animation-delay: 1.7s; width: 15px; height: 15px; }
+.petal:nth-child(16) { left: 60%; animation-duration: 13.8s; animation-delay: 2.7s; }
+.petal:nth-child(17) { left: 70%; animation-duration: 10.7s; animation-delay: 0.4s; width: 14px; height: 14px; }
+.petal:nth-child(18) { left: 80%; animation-duration: 12.3s; animation-delay: 1.4s; }
+.petal:nth-child(19) { left: 90%; animation-duration: 11.7s; animation-delay: 2.4s; }
+.petal:nth-child(20) { left: 12%; animation-duration: 13.3s; animation-delay: 3.4s; width: 16px; height: 16px; }

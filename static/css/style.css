@@ -357,11 +357,11 @@ nav ul li a.active::after {
 }
 
 .left-text {
-    left: 2%;
+    left: 10%;
 }
 
 .right-text {
-    right: 2%;
+    right: 10%;
 }
 
 .vertical-text span {
