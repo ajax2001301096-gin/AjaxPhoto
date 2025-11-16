@@ -157,17 +157,8 @@
           <div class="stack-indicator">📍 {{ group.count }} photos</div>
           <div class="photo-stack">
             {% for photo in group.photos %}
-            <div
-              class="photo-card"
-              {%
-              if
-              forloop.first
-              %}onclick="openModal({{ photo.photo_id }})"
-              {%
-              endif
-              %}
-            >
-              <img src="{{ photo.picture.url }}" alt="{{ photo.blogPhoto.blog_title }}" />
+            <div class="photo-card"{% if forloop.first %}onclick="openModal({{ photo.photo_id }})" {% endif %}>
+              <img src="{{ photo.picture.url }}" alt="{{ photo.blogPhoto.blog_title }}" loading="lazy"/>
               {% if forloop.first %}
               <div class="photo-info">
                 <h3>{{ photo.title }}</h3>
@@ -190,7 +181,7 @@
             <div class="photo-card">
               <img
                 src="{{ group.photos.0.picture.url }}"
-                alt="{{ group.photos.0.blogPhoto.blog_title }}"
+                alt="{{ group.photos.0.blogPhoto.blog_title }}" loading="lazy"
               />
               <div class="photo-info">
                 <h3>{{ group.photos.0.title }}</h3>
