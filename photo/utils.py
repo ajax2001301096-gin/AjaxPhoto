@@ -2,12 +2,14 @@ from PIL import Image, ExifTags
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
+import os
 
 def optimize_image(image_field, max_width=1920, max_height=1080, quality=85):
     """
     Tự động resize ảnh về max 1920x1080
     Giữ nguyên tỷ lệ aspect ratio
     ✅ FIX: Xử lý EXIF orientation để ảnh không bị xoay
+    ✅ FIX: Đảm bảo tên file đúng
     """
     try:
         # Mở ảnh
@@ -16,10 +18,8 @@ def optimize_image(image_field, max_width=1920, max_height=1080, quality=85):
         
         # ✅ XỬ LÝ EXIF ORIENTATION (fix ảnh bị xoay)
         try:
-            # Lấy thông tin EXIF
             exif = img._getexif()
             if exif is not None:
-                # Tìm tag orientation
                 orientation_key = None
                 for tag, value in ExifTags.TAGS.items():
                     if value == 'Orientation':
@@ -39,7 +39,6 @@ def optimize_image(image_field, max_width=1920, max_height=1080, quality=85):
                     
                     print(f"✅ Fixed EXIF orientation: {orientation}")
         except (AttributeError, KeyError, IndexError, TypeError):
-            # Không có EXIF data hoặc lỗi khi đọc
             pass
         
         # Convert sang RGB nếu là PNG/RGBA
@@ -63,16 +62,27 @@ def optimize_image(image_field, max_width=1920, max_height=1080, quality=85):
         img.save(output, format='JPEG', quality=quality, optimize=True)
         output.seek(0)
         
+        # ✅ FIX: Xử lý tên file đúng cách
+        # Lấy tên file gốc (không có extension)
+        original_filename = os.path.basename(image_field.name)
+        filename_without_ext = os.path.splitext(original_filename)[0]
+        new_filename = f"{filename_without_ext}.jpg"
+        
+        print(f"📁 Original: {image_field.name}")
+        print(f"📁 New filename: {new_filename}")
+        
         # Tạo file mới
         return InMemoryUploadedFile(
             output,
             'ImageField',
-            f"{image_field.name.split('.')[0]}.jpg",
+            new_filename,
             'image/jpeg',
             sys.getsizeof(output),
             None
         )
     except Exception as e:
         print(f"❌ Error optimizing image: {e}")
+        import traceback
+        traceback.print_exc()
         # Nếu lỗi, trả về ảnh gốc
         return image_field
