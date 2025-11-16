@@ -37,7 +37,7 @@ class MainIndexView(View):
     context = {
       'blog_groups':blog_groups
     }
-    return render(request,'main/index.html',context)
+    return render(request,'blogPhoto/blogList.html',context)
   
 def blog_detail(request,blog_id):
   #ブログ詳細を表示する

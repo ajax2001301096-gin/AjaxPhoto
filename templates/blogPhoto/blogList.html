@@ -1,0 +1,60 @@
+{% extends "main/base.html" %}
+{% block section %}
+<!-- Gallery Section -->
+<section class="gallery" id="gallery">
+  {% for group in blog_groups %}
+    {% if group.count > 1 %}
+    <!-- 複数写真の場合 -->
+    <div
+      class="photo-item stacked"
+      data-location="{{ group.location.location_name }}"
+      onclick="loadBlogDetail({{ group.photos.0.blogPhoto.blog_id }})"
+    >
+      <div class="stack-indicator">📍 {{ group.count }} photos</div>
+      <div class="photo-stack">
+        {% for photo in group.photos %}
+        <div class="photo-card">
+          <img src="{{ photo.picture.url }}" alt="{{ photo.blogPhoto.blog_title }}" loading="lazy"/>
+          {% if forloop.first %}
+          <div class="photo-info">
+            <h3>{{ photo.blogPhoto.blog_title }}</h3>
+            <div class="photo-location">
+              📍 {{ group.location.location_name }}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
+    <!-- 写真一つの場合 -->
+    <div
+      class="photo-item"
+      onclick="loadBlogDetail({{ group.photos.0.blogPhoto.blog_id }})"
+    >
+      <div class="photo-stack">
+        <div class="photo-card">
+          <img
+            src="{{ group.photos.0.picture.url }}"
+            alt="{{ group.photos.0.blogPhoto.blog_title }}" 
+            loading="lazy"
+          />
+          <div class="photo-info">
+            <h3>{{ group.photos.0.blogPhoto.blog_title }}</h3>
+            <div class="photo-location">
+              📍 {{ group.location.location_name }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  {% endfor %}
+</section>
+
+<!-- Container cho blog detail (ẩn mặc định) -->
+<div id="blog-detail-overlay" style="display: none;">
+  <div id="blog-detail-content"></div>
+</div>
+{% endblock %}

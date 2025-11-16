@@ -1,0 +1,106 @@
+{% load static %}
+
+<div class="blog-detail-container">
+    <!-- Back Button -->
+    <button onclick="backToGallery()" class="back-btn">
+        ← Quay về trang chủ
+    </button>
+
+    <!-- Blog Title -->
+    <h1 class="blog-title">{{ blog.blog_title }}</h1>
+
+    <!-- Blog Meta -->
+    <div class="blog-meta">
+        <div class="meta-item">
+            📍 
+            {% if blog.location %}
+                <span>{{ blog.location.location_name }}</span>
+            {% else %}
+                <span>Không rõ địa điểm</span>
+            {% endif %}
+        </div>
+        <div class="meta-item">
+            📅 {{ blog.update_date|date:"d/m/Y" }}
+        </div>
+        <div class="meta-item">
+            📸 {{ photos.count }} ảnh
+        </div>
+    </div>
+
+    <!-- Image Slider -->
+    {% if photos %}
+    <div class="image-slider">
+        <div class="slider-wrapper">
+            {% for photo in photos %}
+            <div class="slide {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter0 }}">
+                <img src="{{ photo.picture.url }}" alt="{{ blog.blog_title }} - {{ forloop.counter }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+            </div>
+            {% endfor %}
+
+            <!-- Navigation Arrows -->
+            {% if photos.count > 1 %}
+            <button class="slider-arrow prev" onclick="changeSlide(-1)">‹</button>
+            <button class="slider-arrow next" onclick="changeSlide(1)">›</button>
+
+            <!-- Image Counter -->
+            <div class="image-counter">
+                <span id="current-slide">1</span> / {{ photos.count }}
+            </div>
+
+            <!-- Dots Navigation -->
+            <div class="slider-dots">
+                {% for photo in photos %}
+                <span class="dot {% if forloop.first %}active{% endif %}" onclick="goToSlide({{ forloop.counter0 }})"></span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Blog Content -->
+    <article class="blog-content">
+        {{ blog.get_html_content|safe }}
+    </article>
+
+    <!-- Camera Info -->
+    {% if blog.camera_info %}
+    <div class="camera-info-box">
+        <h4>📷 Thông tin kỹ thuật</h4>
+        <p>{{ blog.camera_info }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Related Posts -->
+    {% if related_blogs %}
+    <div class="related-posts">
+        <h3>Bài Viết Liên Quan</h3>
+        <div class="related-grid">
+            {% for related in related_blogs %}
+            <div class="related-card" onclick="loadBlogDetail({{ related.blog_id }})">
+                {% with related.photo_set.first as first_photo %}
+                    {% if first_photo %}
+                    <img src="{{ first_photo.picture.url }}" alt="{{ related.blog_title }}" loading="lazy">
+                    {% else %}
+                    <div style="width: 100%; height: 200px; background: #E8E3DB; display: flex; align-items: center; justify-content: center; color: #7A7571;">
+                        No Image
+                    </div>
+                    {% endif %}
+                {% endwith %}
+                <div class="related-card-content">
+                    <div class="related-card-title">{{ related.blog_title }}</div>
+                    <div class="related-card-meta">
+                        {% if related.location %}
+                            📍 {{ related.location.location_name }}
+                        {% endif %}
+                        • 📅 {{ related.update_date|date:"d/m/Y" }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script src="{% static 'js/slideChange.js' %}"></script>

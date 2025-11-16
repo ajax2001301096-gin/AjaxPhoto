@@ -95,8 +95,8 @@
         <!-- Navigation -->
         <nav id="nav">
           <ul>
-            <li><a href="#" class="active">写真</a></li>
-            <li><a href="#">写真ブログ</a></li>
+            <li><a href="#" >写真</a></li>
+            <li><a href="#" class="active">写真ブログ</a></li>
             <li class="has-dropdown">
               <a href="#">ITブログ</a>
               <!-- Dropdown (optional) -->
@@ -147,53 +147,8 @@
           <span style="--i: 4">間</span>
         </div>
       </div>
-      <section class="gallery" id="gallery">
-        {% for group in blog_groups %} {% if group.count > 1 %}
-        <!-- 複数写真の場合 -->
-        <div
-          class="photo-item stacked"
-          data-location="{{ group.location.location_name }}"
-        >
-          <div class="stack-indicator">📍 {{ group.count }} photos</div>
-          <div class="photo-stack">
-            {% for photo in group.photos %}
-            <div class="photo-card"{% if forloop.first %}onclick="openModal({{ photo.photo_id }})" {% endif %}>
-              <img src="{{ photo.picture.url }}" alt="{{ photo.blogPhoto.blog_title }}" loading="lazy"/>
-              {% if forloop.first %}
-              <div class="photo-info">
-                <h3>{{ photo.title }}</h3>
-                <div class="photo-location">
-                  📍 {{ group.location.location_name }}
-                </div>
-              </div>
-              {% endif %}
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-        {% else %}
-        <!-- 写真一つの場合 -->
-        <div
-          class="photo-item"
-          onclick="openModal({{ group.photos.0.photo_id }})"
-        >
-          <div class="photo-stack">
-            <div class="photo-card">
-              <img
-                src="{{ group.photos.0.picture.url }}"
-                alt="{{ group.photos.0.blogPhoto.blog_title }}" loading="lazy"
-              />
-              <div class="photo-info">
-                <h3>{{ group.photos.0.title }}</h3>
-                <div class="photo-location">
-                  📍 {{ group.location.location_name }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% endif %} {% endfor %}
-      </section>
+        {% block section %}
+        {% endblock %}
           <script src="{% static 'js/base.js' %}"></script>
     </div>
   </body>
