@@ -1,7 +1,7 @@
 from django.db import models
 from pathlib import Path
 from location.models import Location
-
+import markdown
 
 #写真ブログテーブル
 class BlogPhoto(models.Model):
@@ -16,3 +16,24 @@ class BlogPhoto(models.Model):
 
   def __str__(self):
     return self.blog_title
+  
+  # ✅ Method chuyển Markdown sang HTML
+  def get_html_content(self):
+      """
+      Convert Markdown to HTML
+      Extensions:
+      - extra: Tables, code blocks, footnotes
+      - nl2br: Newline = <br>
+      - sane_lists: Better list handling
+      - codehilite: Syntax highlighting
+      - toc: Table of contents
+      - fenced_code: ```code blocks```
+      """
+      md = markdown.Markdown(extensions=[
+          'extra',          # Tables, abbr, attr_list, def_list, fenced_code, footnotes
+          'nl2br',          # \n = <br>
+          'sane_lists',     # Better list formatting
+          'codehilite',     # Code syntax highlighting
+          'toc',            # Auto table of contents
+      ])
+      return md.convert(self.blog_body)
