@@ -35,6 +35,6 @@ class MainIndexView(View):
     context = {
       'blog_groups':blog_groups
     }
-    return render(request,'main/index.html',context)
+    return render(request,'blogPhoto/blogList.html',context)
   
 mainindex = cache_page(60 * 5)(MainIndexView.as_view())
