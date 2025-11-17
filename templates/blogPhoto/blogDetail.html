@@ -1,0 +1,104 @@
+{% load static %}
+
+<div class="blog-detail-container">
+    
+    <button class="back-btn" onclick="backToGallery()">← Quay lại</button>
+
+    <h1 class="blog-title">{{ blog.blog_title }}</h1>
+
+    <div class="blog-meta">
+        <div class="meta-item">📅 <span>{{ blog.update_date|date:"d/m/Y" }}</span></div>
+        {% if blog.location %}
+        <div class="meta-item">📍 <span>{{ blog.location.location_name }}</span></div>
+        {% endif %}
+        <div class="meta-item">📷 <span>{{ photos|length }} ảnh</span></div>
+    </div>
+
+    {% if photos %}
+    <div class="image-slider">
+        <div class="slider-wrapper">
+            {% for photo in photos %}
+            <div class="slide {% if forloop.first %}active{% endif %}">
+                <img src="{{ photo.picture.url }}" alt="{{ blog.blog_title }}">
+            </div>
+            {% endfor %}
+
+            {% if photos|length > 1 %}
+            <button class="slider-arrow prev">‹</button>
+            <button class="slider-arrow next">›</button>
+
+            <div class="slider-dots">
+                {% for photo in photos %}
+                <span class="dot {% if forloop.first %}active{% endif %}"></span>
+                {% endfor %}
+            </div>
+
+            <div class="image-counter">
+                <span id="current-slide">1</span> / <span id="total-slides">{{ photos|length }}</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="blog-content">{{ blog.get_html_content|safe }}</div>
+
+    {% if blog.camera_info %}
+    <div class="camera-info-box">
+        <h4>📷 Thông tin máy ảnh</h4>
+        <p>{{ blog.camera_info }}</p>
+    </div>
+    {% endif %}
+
+    {% if blog.location and blog.location.maps_url %}
+    <div class="camera-info-box">
+        <h4>🗺️ Vị trí</h4>
+        <p><a href="{{ blog.location.maps_url }}" target="_blank">{{ blog.location.location_name }} - Xem trên Google Maps →</a></p>
+    </div>
+    {% endif %}
+
+    {% if related_blogs %}
+    <div class="related-posts">
+        <h3>Bài viết liên quan</h3>
+        <div class="related-grid">
+            {% for related in related_blogs %}
+            <div class="related-card" onclick="loadBlogDetail({{ related.blog_id }})">
+                {% with related.photo_set.first as first_photo %}
+                    {% if first_photo %}
+                    <img src="{{ first_photo.picture.url }}" alt="{{ related.blog_title }}">
+                    {% else %}
+                    <div style="width:100%;height:200px;background:#E8E3DB;display:flex;align-items:center;justify-content:center;color:#7A7571;">Không có ảnh</div>
+                    {% endif %}
+                {% endwith %}
+                <div class="related-card-content">
+                    <div class="related-card-title">{{ related.blog_title }}</div>
+                    <div class="related-card-meta">
+                        <span>{{ related.update_date|date:"d/m/Y" }}</span>
+                        {% if related.location %}<span>• {{ related.location.location_name }}</span>{% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+<script>
+// Đợi ảnh load xong rồi init slider
+(function() {
+    const imgs = document.querySelectorAll('.slide img');
+    let loaded = 0;
+    
+    function check() {
+        if (++loaded === imgs.length) {
+            setTimeout(() => window.initializeSlider?.(), 100);
+        }
+    }
+    
+    imgs.forEach(img => {
+        img.complete ? check() : img.onload = img.onerror = check;
+    });
+})();
+</script>

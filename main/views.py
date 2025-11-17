@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from photo.models import Photo
+from blogPhoto.models import BlogPhoto
 from location.models import Location
 from collections import defaultdict
 from django.views.decorators.cache import cache_page
+from django.db.models import Count
 
 class MainIndexView(View):
   def get(self,request):
@@ -37,4 +39,29 @@ class MainIndexView(View):
     }
     return render(request,'blogPhoto/blogList.html',context)
   
+def blog_detail(request,blog_id):
+  #ブログ詳細を表示する
+  #現在のブログを取得
+  blog = get_object_or_404(BlogPhoto.objects.select_related('location'),blog_id=blog_id)
+  #現在ブログの全部写真
+  photos = Photo.objects.filter(blogPhoto=blog).order_by('uploaded_at')
+
+  related_blogs = []
+  if blog.location:
+    same_location_blogs = BlogPhoto.objects.filter(location=blog.location).exclude(blog_id=blog_id).select_related('location').prefetch_related('photo_set').order_by('-update_date')[:3]
+
+    related_blogs = list(same_location_blogs)
+
+  if len(related_blogs) < 3:
+    additional_blos = BlogPhoto.objects.exclude(blog_id=blog_id).exclude(blog_id__in=[b.blog_id for b in related_blogs]).select_related('location').prefetch_related('photo_set').order_by('-update_date')[:(3 - len(related_blogs))]
+    related_blogs.extend(list(additional_blos))
+  
+  context = {
+    'blog':blog,
+    'photos':photos,
+    'related_blogs':related_blogs
+  }
+  return render(request,'blogPhoto/blogDetail.html',context)
+
+
 mainindex = cache_page(60 * 5)(MainIndexView.as_view())
