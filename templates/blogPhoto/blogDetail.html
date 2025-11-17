@@ -1,9 +1,11 @@
 {% load static %}
 
+<!-- Blog Detail Container -->
 <div class="blog-detail-container">
+    
     <!-- Back Button -->
-    <button onclick="backToGallery()" class="back-btn">
-        ← Quay về trang chủ
+    <button class="back-btn" onclick="backToGallery()">
+        ← Quay lại
     </button>
 
     <!-- Blog Title -->
@@ -12,18 +14,15 @@
     <!-- Blog Meta -->
     <div class="blog-meta">
         <div class="meta-item">
-            📍 
-            {% if blog.location %}
-                <span>{{ blog.location.location_name }}</span>
-            {% else %}
-                <span>Không rõ địa điểm</span>
-            {% endif %}
+            📅 <span>{{ blog.update_date|date:"d/m/Y" }}</span>
         </div>
+        {% if blog.location %}
         <div class="meta-item">
-            📅 {{ blog.update_date|date:"d/m/Y" }}
+            📍 <span>{{ blog.location.location_name }}</span>
         </div>
+        {% endif %}
         <div class="meta-item">
-            📸 {{ photos.count }} ảnh
+            📷 <span>{{ photos|length }} ảnh</span>
         </div>
     </div>
 
@@ -31,69 +30,82 @@
     {% if photos %}
     <div class="image-slider">
         <div class="slider-wrapper">
+            <!-- Slides -->
             {% for photo in photos %}
-            <div class="slide {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter0 }}">
-                <img src="{{ photo.picture.url }}" alt="{{ blog.blog_title }} - {{ forloop.counter }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+            <div class="slide {% if forloop.first %}active{% endif %}">
+                <img src="{{ photo.picture.url }}" alt="{{ blog.blog_title }} - Ảnh {{ forloop.counter }}">
             </div>
             {% endfor %}
 
             <!-- Navigation Arrows -->
-            {% if photos.count > 1 %}
-            <button class="slider-arrow prev" onclick="changeSlide(-1)">‹</button>
-            <button class="slider-arrow next" onclick="changeSlide(1)">›</button>
+            {% if photos|length > 1 %}
+            <button class="slider-arrow prev" aria-label="Previous slide">‹</button>
+            <button class="slider-arrow next" aria-label="Next slide">›</button>
 
-            <!-- Image Counter -->
-            <div class="image-counter">
-                <span id="current-slide">1</span> / {{ photos.count }}
-            </div>
-
-            <!-- Dots Navigation -->
+            <!-- Dots -->
             <div class="slider-dots">
                 {% for photo in photos %}
-                <span class="dot {% if forloop.first %}active{% endif %}" onclick="goToSlide({{ forloop.counter0 }})"></span>
+                <span class="dot {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter0 }}"></span>
                 {% endfor %}
+            </div>
+
+            <!-- Counter -->
+            <div class="image-counter">
+                <span id="current-slide">1</span> / <span id="total-slides">{{ photos|length }}</span>
             </div>
             {% endif %}
         </div>
     </div>
     {% endif %}
 
-    <!-- Blog Content -->
-    <article class="blog-content">
+    <!-- Blog Content (Markdown converted to HTML) -->
+    <div class="blog-content">
         {{ blog.get_html_content|safe }}
-    </article>
+    </div>
 
     <!-- Camera Info -->
     {% if blog.camera_info %}
     <div class="camera-info-box">
-        <h4>📷 Thông tin kỹ thuật</h4>
+        <h4>📷 Thông tin máy ảnh</h4>
         <p>{{ blog.camera_info }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Location Map -->
+    {% if blog.location and blog.location.maps_url %}
+    <div class="camera-info-box">
+        <h4>🗺️ Vị trí</h4>
+        <p>
+            <a href="{{ blog.location.maps_url }}" target="_blank" rel="noopener noreferrer">
+                {{ blog.location.location_name }} - Xem trên Google Maps →
+            </a>
+        </p>
     </div>
     {% endif %}
 
     <!-- Related Posts -->
     {% if related_blogs %}
     <div class="related-posts">
-        <h3>Bài Viết Liên Quan</h3>
+        <h3>Bài viết liên quan</h3>
         <div class="related-grid">
             {% for related in related_blogs %}
             <div class="related-card" onclick="loadBlogDetail({{ related.blog_id }})">
                 {% with related.photo_set.first as first_photo %}
                     {% if first_photo %}
-                    <img src="{{ first_photo.picture.url }}" alt="{{ related.blog_title }}" loading="lazy">
+                    <img src="{{ first_photo.picture.url }}" alt="{{ related.blog_title }}">
                     {% else %}
                     <div style="width: 100%; height: 200px; background: #E8E3DB; display: flex; align-items: center; justify-content: center; color: #7A7571;">
-                        No Image
+                        Không có ảnh
                     </div>
                     {% endif %}
                 {% endwith %}
                 <div class="related-card-content">
                     <div class="related-card-title">{{ related.blog_title }}</div>
                     <div class="related-card-meta">
+                        <span>{{ related.update_date|date:"d/m/Y" }}</span>
                         {% if related.location %}
-                            📍 {{ related.location.location_name }}
+                        <span>• {{ related.location.location_name }}</span>
                         {% endif %}
-                        • 📅 {{ related.update_date|date:"d/m/Y" }}
                     </div>
                 </div>
             </div>
@@ -101,6 +113,49 @@
         </div>
     </div>
     {% endif %}
+
 </div>
 
-<script src="{% static 'js/slideChange.js' %}"></script>
+<!-- CRITICAL: Initialize slider only when this content loads -->
+<script>
+(function() {
+    console.log('🎬 Blog detail content loaded, initializing slider...');
+    
+    // Wait for images to load before initializing
+    const images = document.querySelectorAll('.slide img');
+    let loadedImages = 0;
+    
+    if (images.length === 0) {
+        console.log('⚠️ No images found');
+        return;
+    }
+    
+    function checkAllImagesLoaded() {
+        loadedImages++;
+        console.log(`📸 Image loaded: ${loadedImages}/${images.length}`);
+        
+        if (loadedImages === images.length) {
+            console.log('✅ All images loaded, initializing slider...');
+            setTimeout(function() {
+                if (typeof window.initializeSlider === 'function') {
+                    window.initializeSlider();
+                } else {
+                    console.error('❌ initializeSlider function not found!');
+                }
+            }, 200);
+        }
+    }
+    
+    images.forEach(function(img) {
+        if (img.complete) {
+            checkAllImagesLoaded();
+        } else {
+            img.addEventListener('load', checkAllImagesLoaded);
+            img.addEventListener('error', function() {
+                console.error('❌ Image failed to load:', img.src);
+                checkAllImagesLoaded(); // Still count it as "loaded" to proceed
+            });
+        }
+    });
+})();
+</script>

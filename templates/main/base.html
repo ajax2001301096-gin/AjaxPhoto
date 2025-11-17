@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2" />
-    <link rel="stylesheet" href="{% static 'css/sakura.css' %}?v=2" />
-    <link rel="stylesheet" href="{% static 'css/blogDetail.css' %}?v=1" />
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=3" />
+    <link rel="stylesheet" href="{% static 'css/sakura.css' %}?v=3" />
+    <link rel="stylesheet" href="{% static 'css/blogDetail.css' %}?v=3" />
+    <title>Ajax Portal - Photo Blog</title>
   </head>
   <body>
     <!-- Container cho cánh hoa rơi -->
     <div class="petals-container" id="petalsContainer"></div>
+    
     <!--ヘッダー-->
     <header id="header">
       <div class="header-container">
@@ -119,6 +120,7 @@
         </button>
       </div>
     </header>
+    
     <!--ボディ-->
     <div>
       <div class="avatar_main">
@@ -132,7 +134,7 @@
         </div>
         <div class="banner-container">
           <!-- Ảnh chính -->
-          <img src="media/Avatar/avatar2.jpg" alt="Banner" />
+          <img src="media/Avatar/Avatar1.jpg" alt="Banner" />
           <!-- Slogan ở dưới -->
           <div class="banner-overlay">
             <h1>あらゆる瞬間、あらゆる美しさ</h1>
@@ -148,9 +150,13 @@
           <span style="--i: 4">間</span>
         </div>
       </div>
-        {% block section %}
-        {% endblock %}
-          <script src="{% static 'js/base.js' %}"></script>
+      
+      {% block section %}
+      {% endblock %}
     </div>
+    
+    <!-- Load slider script BEFORE base.js -->
+    <script src="{% static 'js/slideChange.js' %}?v=3"></script>
+    <script src="{% static 'js/base.js' %}?v=3"></script>
   </body>
 </html>
