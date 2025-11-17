@@ -61,7 +61,7 @@ def blog_detail(request,blog_id):
     'photos':photos,
     'related_blogs':related_blogs
   }
-  return render(request,'blog/detail.html',context)
+  return render(request,'blogPhoto/blogDetail.html',context)
 
 
 mainindex = cache_page(60 * 5)(MainIndexView.as_view())
